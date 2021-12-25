@@ -50,7 +50,6 @@ class Dataset:
     def _files(self):
         return [File(file_dict, folder=self.name, root_dir=self.root_dir) for file_dict in self.dataset['files']]
 
-
     def download_files(self):
         """
         Downloads all files for the dataset.
@@ -59,7 +58,6 @@ class Dataset:
         """
         for f in self.files:
             f.download(hide_progress=self.args.hide_progress)
-
 
     def db_import(self):
         """

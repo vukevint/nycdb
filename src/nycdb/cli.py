@@ -1,16 +1,27 @@
+"""
+TODO:
+- create a config.ini flag that stores the postgres parametrs
+    - to achieve this, use ConfigParser to read config.ini
+    and then ChainMap collections to manage namespace: 
+    https://stackoverflow.com/questions/35142992/dynamically-set-default-value-from-cfg-file-through-argparse-python
+"""
+
 import argparse
 import logging
 import os
 import subprocess
 import sys
+import configparser
 from .dataset import Dataset, datasets
 
 
-POSTGRES_USER = os.environ.get('NYCDB_POSTGRES_USER', 'nycdb')
-POSTGRES_PASSWORD = os.environ.get('NYCDB_POSTGRES_PASSWORD', 'nycdb')
-POSTGRES_HOST = os.environ.get('NYCDB_POSTGRES_HOST', '127.0.0.1')
-POSTGRES_DB = os.environ.get('NYCDB_POSTGRES_DB', 'nycdb')
-POSTGRES_PORT = os.environ.get('NYCDB_POSTGRES_PORT', '5432')
+POSTGRES_DEFAULTS = {
+    'user': os.environ.get('NYCDB_POSTGRES_USER', 'nycdb'),
+    'password': os.environ.get('NYCDB_POSTGRES_PASSWORD', 'nycdb'),
+    'host': os.environ.get('NYCDB_POSTGRES_HOST', '127.0.0.1'),
+    'database': os.environ.get('NYCDB_POSTGRES_DB', 'nycdb'),
+    'port': os.environ.get('NYCDB_POSTGRES_PORT', '5432')
+}
 
 
 def parse_args():
@@ -28,37 +39,40 @@ def parse_args():
     parser.add_argument(
         "-U",
         "--user",
-        help="Postgres user. default: {}".format(POSTGRES_USER),
-        default=POSTGRES_USER
+        help="Postgres user. default: {}".format(POSTGRES_DEFAULTS['user'])
     )
     parser.add_argument(
         "-P",
         "--password",
-        help="Postgres password. default: {}".format(POSTGRES_PASSWORD),
-        default=POSTGRES_PASSWORD
+        help="Postgres password. default: {}".format(POSTGRES_DEFAULTS['password']),
     )
     parser.add_argument(
         "-H",
         "--host",
-        help="Postgres host: default: {}".format(POSTGRES_HOST),
-        default=POSTGRES_HOST
+        help="Postgres host: default: {}".format(POSTGRES_DEFAULTS['host']),
     )
     parser.add_argument(
         "-D",
         "--database",
-        help="postgres database: default: {}".format(POSTGRES_DB),
-        default=POSTGRES_DB
+        help="postgres database: default: {}".format(POSTGRES_DEFAULTS['database']),
     )
     parser.add_argument(
         "--port",
-        help="Postgres port: default: {}".format(POSTGRES_PORT),
-        default=POSTGRES_PORT
+        help="Postgres port: default: {}".format(POSTGRES_DEFAULTS['port']),
     )
     # change location of data dir
     parser.add_argument("--root-dir", help="location of data directory", default="./data")
     # easily inspect the database from the command-line
     parser.add_argument("--dbshell", action="store_true", help="runs psql interactively")
     parser.add_argument("--hide-progress", action="store_true", help="hide the progress bar")
+    # overwrites  default values with config.ini parameters, but is in turn
+    # overwritten by user-defined args
+    parser.add_argument(
+        "--config", help="section to read from config.ini"
+    )
+    parser.add_argument(
+        "--config-path", help="path to config.ini"
+    )
     return parser.parse_args()
 
 
@@ -90,10 +104,10 @@ def dispatch(args):
     if args.list_datasets:
         print_datasets()
     elif args.verify:
-         if Dataset(args.verify, args=args).verify():
-             sys.exit(0)
-         else:
-             sys.exit(1)
+        if Dataset(args.verify, args=args).verify():
+            sys.exit(0)
+        else:
+            sys.exit(1)
     elif args.verify_all:
         verify_all(args)
     elif args.download:
@@ -105,9 +119,14 @@ def dispatch(args):
     elif args.dbshell:
         run_dbshell(args=args)
 
+
 def main():
     logging.basicConfig(level=logging.DEBUG)
     args = parse_args()
+    config = {k: v for k, v in vars(args).items() if v is not None}
+    # figure out if only the database configs can be parsed out, prob from 
+    # POSTGRES_DEFAULTS keys, and then put back into 'args' after chainmap()
+    args = config  # update args with config params
     dispatch(args)
 
 

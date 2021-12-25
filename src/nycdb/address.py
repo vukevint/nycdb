@@ -50,9 +50,11 @@ REMOVE = [
 
 REGEX_REPLACEMENTS = STREETS + DIRECTIONS + REMOVE
 
+
 # Str, Str -> Lambda
 def replace_func(pattern, replacement):
     return lambda s: re.sub(pattern, replacement, s)
+
 
 ALIASES_FUNCS = list(map(lambda x: replace_func(*x), ALIASES))
 REGEX_FUNCS = list(map(lambda x: replace_func(*x), REGEX_REPLACEMENTS))
@@ -97,11 +99,14 @@ HOLY_SAINTS = ['JOSEPH', 'MARKS', 'LAWRENCE', 'JAMES',
 
 SAINTS_REGEX = r"ST\.?[ ](?P<street_name>({}))".format('|'.join(HOLY_SAINTS))
 
+
 def saints(s):
     repl = lambda matchobj: "SAINT " + matchobj.group('street_name')
     return re.sub(SAINTS_REGEX, repl, s)
 
+
 STREET_FUNCS = ALIASES_FUNCS + [replace_number, saints] + REGEX_FUNCS
+
 
 # list(of functions), str -> str
 def func_chain(funcs, val):
@@ -109,6 +114,7 @@ def func_chain(funcs, val):
         return val
     else:
         return func_chain(funcs[1:], funcs[0](val))
+
 
 def remove_extra_spaces(s):
     return ' '.join([x for x in s.split(' ') if x != ''])
@@ -138,6 +144,7 @@ def normalize_street_number(number):
 
 APT_STRINGS_TO_REMOVE = ['.', '_', '#', '{', '}', '/']
 
+
 def clean_apt_str(s):
     s = prepare(s)
     for char_to_remove in APT_STRINGS_TO_REMOVE:
@@ -150,6 +157,7 @@ APT_NUM = r'(?<=\d)(ST|TH|ND|RD)'
 # "12TH F" becomes 12FLOOR
 EDGE_CASE_FLOOR = APT_NUM + '[ ]F$'
 FLOOR_REGEX = r'(?<=\d)[ ]?((FL(OOR|O|R)?)|FW)$'
+
 
 def normalize_apartment(string):
     if string is None:

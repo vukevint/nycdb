@@ -9,6 +9,7 @@ from .transform import hpd_registrations_address_cleanup, hpd_contacts_address_c
 from .datasets import datasets
 from .annual_sales import AnnualSales
 
+
 def ecb_violations(dataset):
     return with_bbl(to_csv(dataset.files[0].dest), borough='boro')
 
@@ -42,9 +43,9 @@ def _pluto(dataset):
 
     for line in pluto_generator:
         if line['borough'] is None or line['block'] is None or line['lot'] is None:
-          logging.info("skipping pluto row without bbl: {}".format(line))
+            logging.info("skipping pluto row without bbl: {}".format(line))
         else:
-          yield line
+            yield line
 
 
 # Creates a function for each pluto version
