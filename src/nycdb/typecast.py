@@ -81,6 +81,7 @@ def to_float(x):
     except ValueError:
         return None
 
+
 def mm_dd_yyyy(date_str):
     try:
         month, day, year = map(int, date_str[0:10].split('/'))
@@ -128,7 +129,7 @@ def time(x):
             time = re.search(r'(\d{1,2}):(\d{1,2}):(\d{1,2})', x.strip())
             pm = True if re.match(r'^.*?PM$', x.strip(), flags=re.IGNORECASE) else False
             hour, minute, second = map(int, time.groups())
-            return datetime.time(hour+(pm*12), minute, second)
+            return datetime.time(hour + (pm * 12), minute, second)
         except ValueError:
             return None
 

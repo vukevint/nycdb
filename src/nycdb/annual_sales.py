@@ -1,6 +1,6 @@
 import re
-import openpyxl # for xlsx files
-import xlrd     # for xls files
+import openpyxl  # for xlsx files
+import xlrd  # for xls files
 from datetime import datetime
 from os.path import basename, splitext
 
@@ -29,6 +29,7 @@ headers = [
     'year'
 ]
 
+
 class AnnualSales:
     def __init__(self, filename):
         self.filename = filename
@@ -51,7 +52,7 @@ class AnnualSales:
             worksheet = workbook.sheet_by_index(0)
 
             for row in worksheet.get_rows():
-                values = [ x.value for x in row ]
+                values = [x.value for x in row]
 
                 try:
                     values[0] = str(int(values[0]))
@@ -64,9 +65,9 @@ class AnnualSales:
                 values[2] = values[2].strip()
 
                 if isinstance(values[3], float):
-                    values[3] = str(int(values[3])) # tax class
-                values[4] = str(int(values[4])) # block
-                values[5] = str(int(values[5])) # lot
+                    values[3] = str(int(values[3]))  # tax class
+                values[4] = str(int(values[4]))  # block
+                values[5] = str(int(values[5]))  # lot
                 values[6] = values[6].strip()
 
                 if isinstance(values[9], float):
@@ -75,12 +76,12 @@ class AnnualSales:
                 values[10] = str(int(values[10])).zfill(5)
 
                 # res units, com units, land sqft, gross sqft, year build
-                for i in range(11,17):
-                    if values[i] != None:
+                for i in range(11, 17):
+                    if values[i] is not None:
                         values[i] = int(values[i])
 
                 values[17] = str(int(values[17]))
-                values[19] = str(int(values[19])) # sale price
+                values[19] = str(int(values[19]))  # sale price
                 values[20] = datetime(*xlrd.xldate_as_tuple(values[20], workbook.datemode))
 
                 yield values
