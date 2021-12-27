@@ -4,6 +4,7 @@ TODO:
     - to achieve this, use ConfigParser to read config.ini
     and then ChainMap collections to manage namespace: 
     https://stackoverflow.com/questions/35142992/dynamically-set-default-value-from-cfg-file-through-argparse-python
+- add postgis datasets
 """
 
 import argparse
@@ -68,7 +69,7 @@ def parse_args():
     # overwrites  default values with config.ini parameters, but is in turn
     # overwritten by user-defined args
     parser.add_argument(
-        "--config", help="section to read from config.ini"
+        "--config-section", help="section to read from config.ini"
     )
     parser.add_argument(
         "--config-path", help="path to config.ini"
@@ -101,6 +102,7 @@ def run_dbshell(args):
 
 
 def dispatch(args):
+    print(args)
     if args.list_datasets:
         print_datasets()
     elif args.verify:
@@ -123,10 +125,10 @@ def dispatch(args):
 def main():
     logging.basicConfig(level=logging.DEBUG)
     args = parse_args()
-    config = {k: v for k, v in vars(args).items() if v is not None}
     # figure out if only the database configs can be parsed out, prob from 
     # POSTGRES_DEFAULTS keys, and then put back into 'args' after chainmap()
-    args = config  # update args with config params
+    # config = {k: v for k, v in vars(args).items() if v is not None}
+    # args = config  # update args with config params
     dispatch(args)
 
 

@@ -209,17 +209,20 @@ def test_pluto19v2(conn):
     pluto.db_import()
     assert row_count(conn, 'pluto_19v2') == 10
 
+
 def test_pluto20v8(conn):
     drop_table(conn, 'pluto_20v8')
     pluto = nycdb.Dataset('pluto_20v8', args=ARGS)
     pluto.db_import()
     assert row_count(conn, 'pluto_20v8') == 10
 
+
 def test_pluto21v3(conn):
     drop_table(conn, 'pluto_21v3')
     pluto = nycdb.Dataset('pluto_21v3', args=ARGS)
     pluto.db_import()
     assert row_count(conn, 'pluto_21v3') == 5
+
 
 def test_hpd_violations(conn):
     drop_table(conn, 'hpd_violations')
@@ -491,8 +494,8 @@ def test_dof_annual_sales(conn):
     drop_table(conn, 'dof_annual_sales')
     dof_annual_sales = nycdb.Dataset('dof_annual_sales', args=ARGS)
     dof_annual_sales.files = [
-        nycdb.file.File({ 'dest': 'dof_annual_sales_2020_manhattan.xlsx', 'url': 'https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2020/2020_manhattan.xlsx'}, root_dir=data_dir),
-        nycdb.file.File({ 'dest': 'dof_annual_sales_2015_manhattan.xls', 'url': 'https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2015/2015_manhattan.xls'}, root_dir=data_dir)
+        nycdb.file.File({'dest': 'dof_annual_sales_2020_manhattan.xlsx', 'url': 'https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2020/2020_manhattan.xlsx'}, root_dir=data_dir),
+        nycdb.file.File({'dest': 'dof_annual_sales_2015_manhattan.xls', 'url': 'https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2015/2015_manhattan.xls'}, root_dir=data_dir)
     ]
 
     dof_annual_sales.db_import()
