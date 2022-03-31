@@ -26,7 +26,7 @@ POSTGRES_DEFAULTS = {
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='NYC-DB: utilities for the database of NYC housing data')
+    parser = argparse.ArgumentParser(description='NYCDB: database utilities for NYC housing data')
 
     # Download, Load, Verify, Dump, Reload
     parser.add_argument('--download', action='store', help='downloads file for provided dataset')
@@ -79,14 +79,14 @@ def parse_args():
 
 
 def print_datasets():
-    for ds in datasets().keys():
+    for ds in sorted(datasets().keys()):
         print(ds)
 
 
 def verify_all(args):
     exit_status = 0
 
-    for ds in datasets().keys():
+    for ds in sorted(datasets().keys()):
         if not Dataset(ds, args=args).verify():
             exit_status = 1
 
