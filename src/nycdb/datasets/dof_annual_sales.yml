@@ -1,6 +1,21 @@
 ---
 files:
   -
+    url: https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2021/2021_manhattan.xlsx
+    dest: dof_annual_sales_2021_manhattan.xlsx
+  -
+    url: https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2021/2021_bronx.xlsx
+    dest: dof_annual_sales_2021_bronx.xlsx
+  -
+    url: https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2021/2021_brooklyn.xlsx
+    dest: dof_annual_sales_2021_brooklyn.xlsx
+  -
+    url: https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2021/2021_queens.xlsx
+    dest: dof_annual_sales_2021_queens.xlsx
+  -
+    url: https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2021/2021_staten_island.xlsx
+    dest: dof_annual_sales_2021_staten_island.xlsx
+  -
     url: https://www1.nyc.gov/assets/finance/downloads/pdf/rolling_sales/annualized-sales/2020/2020_manhattan.xlsx
     dest: dof_annual_sales_2020_manhattan.xlsx
   -

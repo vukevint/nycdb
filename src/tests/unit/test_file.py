@@ -6,15 +6,16 @@ import http.server
 import os
 from multiprocessing import Process
 
+
 def test_file_constructor_with_dest():
-    file_dict = { 'url': 'http://example.com', 'dest': 'example.csv' }
+    file_dict = {'url': 'http://example.com', 'dest': 'example.csv'}
     f = nycdb.File(file_dict)
     assert f.url == 'http://example.com'
     assert f.dest == os.path.abspath('./data/example.csv')
 
 
 def test_file_constructor_without_dest():
-    file_dict = { 'url': 'http://example.com/test.csv' }
+    file_dict = {'url': 'http://example.com/test.csv'}
     f = nycdb.File(file_dict)
     assert f.dest == os.path.abspath('./data/test.csv')
 
@@ -22,13 +23,14 @@ def test_file_constructor_without_dest():
 def server_process(directory):
     def run():
         os.chdir(directory)
-        httpd = http.server.HTTPServer( ('', 6789), http.server.SimpleHTTPRequestHandler)
+        httpd = http.server.HTTPServer(('', 6789), http.server.SimpleHTTPRequestHandler)
         httpd.serve_forever()
     
     p = Process(target=run)
     p.start()
     time.sleep(0.01)
     return p
+
 
 def test_download_file(tmpdir):
     f = tmpdir.mkdir("www").join("file.txt")

@@ -9,7 +9,7 @@ def create_table(table_name, fields):
 
 
 def insert_many(table_name, rows):
-    '''
+    """
     Given a table name and a list of dictionaries representing
     rows, generate a (sql, template) tuple of strings that can be
     passed to psycopg2.extras.execute_values() [1] to bulk insert all the
@@ -22,7 +22,7 @@ def insert_many(table_name, rows):
 
     [1]: http://initd.org/psycopg/docs/extras.html#psycopg2.extras.execute_values
     [2]: https://stackoverflow.com/a/30985541
-    '''
+    """
 
     field_names = list(rows[0].keys())
     fields = ', '.join(field_names)
@@ -31,3 +31,7 @@ def insert_many(table_name, rows):
     sql = f"INSERT INTO {table_name} ({fields}) VALUES %s"
 
     return sql, template
+
+
+def drop_table(table_name):
+    return "DROP TABLE {}".format(table_name)

@@ -34,7 +34,7 @@ class Database:
         }
 
     def sql(self, SQL):
-        """ executes single sql statement """
+        """ Executes single sql statement """
         with self.conn.cursor() as curs:
             curs.execute(SQL)
         self.conn.commit()
@@ -81,12 +81,12 @@ class Database:
             return curs.fetchone()[0]
 
     def table_exists(self, table_name):
-        """Tests if the table exists"""
+        """ Tests if the table exists """
         query = "SELECT EXISTS(SELECT 1 FROM information_schema.tables where table_name = '{0}')".format(table_name)
         return self.execute_and_fetchone(query)
 
     def row_count(self, table_name):
-        """returns the row count of the table"""
+        """ Returns the row count of the table """
         query = "SELECT COUNT(*) from {0}".format(table_name)
         return self.execute_and_fetchone(query)
 

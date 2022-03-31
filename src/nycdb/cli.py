@@ -28,12 +28,13 @@ POSTGRES_DEFAULTS = {
 def parse_args():
     parser = argparse.ArgumentParser(description='NYC-DB: utilities for the database of NYC housing data')
 
-    # Download, Load, Verify, Dump
+    # Download, Load, Verify, Dump, Reload
     parser.add_argument('--download', action='store', help='downloads file for provided dataset')
     parser.add_argument('--load', action='store', help='loads dataset into postgres')
     parser.add_argument('--verify', action='store', help='verifies a dataset by checking the table row count')
     parser.add_argument('--dump', action='store', help='creates a sql dump of the datasets in the current folder')
-    # list and verify
+    parser.add_argument('--reload', action='store', help='overwrites dataset into postgres')
+    # list and verify all
     parser.add_argument('--list-datasets', action='store_true', help='lists all datasets')
     parser.add_argument('--verify-all', action='store_true', help='verifies all datasets')
     # DB CONNECTION
@@ -116,6 +117,8 @@ def dispatch(args):
         Dataset(args.download, args=args).download_files()
     elif args.load:
         Dataset(args.load, args=args).db_import()
+    elif args.reload:
+        Dataset(args.reload, args=args).db_reimport()
     elif args.dump:
         Dataset(args.dump, args=args).dump()
     elif args.dbshell:

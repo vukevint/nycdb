@@ -31,6 +31,13 @@ class Dataset:
     To load the files into postgres:
 
         hpd_violations.db_import()
+
+    TODO:
+    - create update method for rolling sales data
+        - need to import rolling sales data with unique index
+        - also need to be able to detect which datasets area available or missing
+            - perhaps have a yml or hidden file to flag datasets. this should be 
+            available through nycdb native tracker.
     """
 
     def __init__(self, dataset_name, args=None):
@@ -71,6 +78,23 @@ class Dataset:
             self.import_schema(schema)
 
         self.sql_files()
+
+    def db_reimport(self):
+        """ Reimports the dataset in the postgres by first dropping table. """
+        if self.db is None:
+            self.db = Database(self.args, table_name=self.name)
+        
+            if self.db.table_exists(self.name):
+                print('Table exists')
+                confirm = input("Reimport \'" + self.name + "\'? This will drop the current table"
+                                ", and then load the table again. (y/n) \n>> ")
+                if confirm in ['yes', 'Y', 'y']: 
+                    self.db.sql(sql.drop_table(self.name))
+                    self.db_import()
+                else:
+                    print('Exiting')
+            else:
+                print('Table cannot be reloaded. Use load command instead.')
 
     def index(self):
         """
@@ -145,6 +169,9 @@ class Dataset:
         """
         if self.db is None:
             self.db = Database(self.args, table_name=self.name)
+
+            if self.db.table_exists(self.name):
+                raise Exception('Table \'' + self.name + '\' exists. Consider using reload command.')
 
     def verify(self):
         """
