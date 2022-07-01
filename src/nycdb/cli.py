@@ -12,14 +12,9 @@ import logging
 import os
 import subprocess
 import sys
-<<<<<<< HEAD
 import configparser
-from .dataset import Dataset, datasets
-
-=======
 from .dataset import Dataset
 from .datasets import datasets
->>>>>>> e65c87f872c719edf3a17edddeeae417e1625dc8
 
 POSTGRES_DEFAULTS = {
     'user': os.environ.get('NYCDB_POSTGRES_USER', 'nycdb'),
@@ -33,22 +28,13 @@ POSTGRES_DEFAULTS = {
 def parse_args():
     parser = argparse.ArgumentParser(description='NYCDB: database utilities for NYC housing data')
 
-<<<<<<< HEAD
     # Download, Load, Verify, Dump, Reload
-    parser.add_argument('--download', action='store', help='downloads file for provided dataset')
-    parser.add_argument('--load', action='store', help='loads dataset into postgres')
-    parser.add_argument('--verify', action='store', help='verifies a dataset by checking the table row count')
-    parser.add_argument('--dump', action='store', help='creates a sql dump of the datasets in the current folder')
-    parser.add_argument('--reload', action='store', help='overwrites dataset into postgres')
-    # list and verify all
-=======
-    # Download, Load, Verify, Dump
     parser.add_argument('--download', metavar='DATASET', action='store', help='downloads file for provided dataset')
     parser.add_argument('--load', metavar='DATASET', action='store', help='loads dataset into postgres')
     parser.add_argument('--verify', metavar='DATASET', action='store', help='verifies a dataset by checking the table row count')
     parser.add_argument('--dump', metavar='DATASET', action='store', help='creates a sql dump of the datasets in the current folder')
-    # list and verify
->>>>>>> e65c87f872c719edf3a17edddeeae417e1625dc8
+    parser.add_argument('--reload', metavar='DATASET', action='store', help='overwrites dataset into postgres')
+    # list and verify all
     parser.add_argument('--list-datasets', action='store_true', help='lists all datasets')
     parser.add_argument('--verify-all', action='store_true', help='verifies all datasets')
     # DB CONNECTION
