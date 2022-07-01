@@ -90,6 +90,7 @@ def fetch_one_row(conn, query):
         curs.execute(query)
         return curs.fetchone()
 
+
 def has_one_row(*args):
     return bool(fetch_one_row(*args))
 
@@ -415,14 +416,20 @@ def test_dob_violations(conn):
 
 def test_pad(conn):
     drop_table(conn, 'pad_adr')
+    drop_table(conn, 'pad_bbl')
     pad = nycdb.Dataset('pad', args=ARGS)
     pad.db_import()
     assert row_count(conn, 'pad_adr') == 100
+    assert row_count(conn, 'pad_bbl') == 100
     with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as curs:
         curs.execute("select * from pad_adr WHERE bin = '1086410'")
         rec = curs.fetchone()
         assert rec is not None
         assert rec['bbl'] == '1000010010'
+        curs.execute("select * from pad_bbl WHERE bbl = '1000010010'")
+        rec = curs.fetchone()
+        assert rec is not None
+        assert rec['hilot'] == '0010'
 
 
 def test_j51_exemptions(conn):
@@ -504,13 +511,15 @@ def test_dof_annual_sales(conn):
     dof_annual_sales.db_import()
     assert row_count(conn, 'dof_annual_sales') == 47
 
+
 def test_dof_421a(conn):
     drop_table(conn, 'dof_421a')
     dof_421a = nycdb.Dataset('dof_421a', args=ARGS)
-    dof_421a.files = [ nycdb.file.File({ 'dest': '421a_2021_brooklyn.xlsx', 'url': 'https://example.com' }, root_dir=data_dir) ]
+    dof_421a.files = [nycdb.file.File({'dest': '421a_2021_brooklyn.xlsx', 'url': 'https://example.com'}, root_dir=data_dir)]
     dof_421a.db_import()
     assert row_count(conn, 'dof_421a') == 45
     assert fetch_one_row(conn, "SELECT * FROM dof_421a LIMIT 1")['fiscalyear'] == '2021'
+
 
 def run_cli(args, input):
     full_args = [

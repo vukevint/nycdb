@@ -89,9 +89,11 @@ def extract_csv_from_zip(file_path, csv_file_path):
                 yield line.decode('UTF-8', 'ignore')
 
 
-def to_csv(file_path_or_generator):
+def to_csv(file_path_or_generator, header=None, dialect='excel'):
     """
-    Reads firstline as the headers and converts input into a stream of dicts
+    Reads firstline as the headers and converts input into a stream of dicts.
+    Keyword 'header' available to manually include header.
+    Keyword 'dialect' available to indicate type of parsing for csv.DictReader.
 
     String | Generator --> Generator
     """
@@ -102,10 +104,16 @@ def to_csv(file_path_or_generator):
     else:
         raise ValueError("to_csv accepts Strings or Generators")
 
-    with f:
-        headers = clean_headers(f.readline())
-        for row in csv.DictReader(f, fieldnames=headers):
-            yield row
+    if not header:
+        # This is the original reader. Will continue to work with all other data sources.
+        with f:
+            headers = clean_headers(f.readline())
+            for row in csv.DictReader(f, fieldnames=headers, dialect=dialect):
+                yield row
+    else:
+        with f:
+            for row in csv.DictReader(f, fieldnames=header, dialect=dialect):
+                yield row
 
 
 def with_bbl(table, borough='borough', block='block', lot='lot'):

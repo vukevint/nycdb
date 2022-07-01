@@ -11,6 +11,21 @@ from .annual_sales import AnnualSales
 from .dof_421a import iter_421a
 
 
+def acris(dataset, schema):
+    dest_file = next(filter(lambda f: schema['table_name'] in f.dest, dataset.files))
+    _to_csv = to_csv(dest_file.dest)
+    if 'skip' in schema:
+        return skip_fields(_to_csv, [s.lower() for s in schema['skip']])
+    else:
+        return _to_csv
+
+
+def avroll(dataset):
+    header = list(map(str.lower, list(dataset.schemas[0].get('fields').keys())))
+    return with_bbl(to_csv(stream_files_from_zip(
+        dataset.files[0].dest, extension='txt'), header=header, dialect='excel-tab'), borough='boro')
+    
+
 def ecb_violations(dataset):
     return with_bbl(to_csv(dataset.files[0].dest), borough='boro')
 
@@ -102,15 +117,6 @@ def rentstab_summary(dataset):
     return to_csv(dataset.files[0].dest)
 
 
-def acris(dataset, schema):
-    dest_file = next(filter(lambda f: schema['table_name'] in f.dest, dataset.files))
-    _to_csv = to_csv(dest_file.dest)
-    if 'skip' in schema:
-        return skip_fields(_to_csv, [s.lower() for s in schema['skip']])
-    else:
-        return _to_csv
-
-
 def oath_hearings(dataset):
     return with_bbl(to_csv(dataset.files[0].dest),
                     borough='violationlocationborough',
@@ -125,6 +131,15 @@ def pad_adr(dataset):
     pad_fields_to_skip = dataset.schemas[0].get('skip')
 
     return skip_fields(pad_generator, [s.lower() for s in pad_fields_to_skip])
+
+
+def pad_bbl(dataset):
+    pad_generator = with_bbl(to_csv(extract_csv_from_zip(
+        dataset.files[0].dest, 'bobabbl.txt')), borough='boro')
+
+    pad_fields_to_skip = dataset.schemas[0].get('skip')
+
+    return skip_fields(pad_generator, [s.lower() for s in pad_fields_to_skip]) 
 
 
 def j51_exemptions(dataset):

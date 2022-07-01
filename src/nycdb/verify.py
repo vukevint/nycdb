@@ -1,4 +1,5 @@
 TABLES = {
+    'avroll': {'avroll': 1_000_000},
     'pluto_10v1': {'pluto_10v1': 800_000},
     'pluto_15v1': {'pluto_15v1': 800_000},
     'pluto_16v2': {'pluto_16v2': 800_000},
@@ -36,7 +37,10 @@ TABLES = {
         'hpd_complaints': 1_000_000,
         'hpd_complaint_problems': 2_000_000
     },
-    'pad': {'pad_adr': 1000000},
+    'pad': {
+        'pad_adr': 1000000,
+        'pad_bbl': 1000000
+    },
     'acris': {
         'real_property_remarks': 1_000_000,
         'real_property_legals': 1_000_000,

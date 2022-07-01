@@ -83,18 +83,28 @@ class Dataset:
         """ Reimports the dataset in the postgres by first dropping table. """
         if self.db is None:
             self.db = Database(self.args, table_name=self.name)
-        
-            if self.db.table_exists(self.name):
-                print('Table exists')
-                confirm = input("Reimport \'" + self.name + "\'? This will drop the current table"
-                                ", and then load the table again. (y/n) \n>> ")
-                if confirm in ['yes', 'Y', 'y']: 
-                    self.db.sql(sql.drop_table(self.name))
-                    self.db_import()
+
+            if all([self.db.table_exists(i['table_name']) for i in self.schemas]):
+                if len(self.schemas) > 1:
+                    confirm = input("More than 1 table exist for this dataset. Reimport all? "
+                                    "This will drop the current tables, and then load all tables again. (y/n) \n>> ")
+                    if confirm in ['yes', 'Y', 'y']:
+                        for i in self.schemas:
+                            self.db.sql(sql.drop_table(i['table_name']))
+                        self.db_import()
+                    else:
+                        # allow reload of specific schemas here
+                        print('Exiting')
                 else:
-                    print('Exiting')
+                    confirm = input("Table exists. Reimport \'" + self.schemas[0]['table_name'] + "\'? "
+                                    "This will drop the current table, and then load the table again. (y/n) \n>> ")
+                    if confirm in ['yes', 'Y', 'y']: 
+                        self.db.sql(sql.drop_table(self.schemas[0]['table_name']))
+                        self.db_import()
+                    else:
+                        print('Exiting')
             else:
-                print('Table cannot be reloaded. Use load command instead.')
+                print('The dataset is not in the database. Use load command instead.')
 
     def index(self):
         """

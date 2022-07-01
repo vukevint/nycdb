@@ -6,33 +6,61 @@ files:
 sql:
   - pad.sql
 schema:
-  table_name: pad_adr
-  fields:
-    Boro: char(1)
-    Block: char(5)
-    Lot: char(4)
-    Bin: char(7)
-    Lhnd: char(12)
-    Lhns: char(11)
-    Lcontpar: char(1)
-    Lsos: char(1)
-    Hhnd: char(12)
-    Hhns: char(11)
-    Hcontpar: char(1)
-    Hsos: char(1)
-    Scboro: char(1)
-    Sc5: char(5)
-    Sclgc: char(2)
-    Stname: char(32)
-    Addrtype: char(1)
-    Realb7sc: char(8)
-    Validlgcs: char(8)
-    Parity: char(1)
-    B10sc: char(11)
-    Segid: char(7)
-    Zipcode: char(5)
-    Bbl: char(10)
-  skip:
-    - dapsflag
-    - naubflag
-    - physicalid
+  -
+    table_name: pad_adr
+    fields:
+      Boro: char(1)
+      Block: char(5)
+      Lot: char(4)
+      Bin: char(7)
+      Lhnd: char(12)
+      Lhns: char(11)
+      Lcontpar: char(1)
+      Lsos: char(1)
+      Hhnd: char(12)
+      Hhns: char(11)
+      Hcontpar: char(1)
+      Hsos: char(1)
+      Scboro: char(1)
+      Sc5: char(5)
+      Sclgc: char(2)
+      Stname: char(32)
+      Addrtype: char(1)
+      Realb7sc: char(8)
+      Validlgcs: char(8)
+      Parity: char(1)
+      B10sc: char(11)
+      Segid: char(7)
+      Zipcode: char(5)
+      Bbl: char(10)
+    skip:
+      - dapsflag
+      - naubflag
+      - physicalid
+  -
+    table_name: pad_bbl
+    fields:
+      Loboro: char(1)
+      Loblock: char(5)
+      Lolot: char(4)
+      Lobblscc: char(1)
+      Hiboro: char(1)
+      Hiblock: char(5)
+      Hilot: char(4)
+      Hibblscc: char(1)
+      Boro: char(1)
+      Block: char(5)
+      Lot: char(4)
+      Bblscc: char(1)
+      Billboro: char(1)
+      Billblock: char(5)
+      Billlot: char(4)
+      Billbblscc: char(1)
+      Condoflag: char(1)
+      Condonum: char(4)
+      Coopnum: char(4)
+      Numbf: char(2)
+      Numaddr: char(4)
+      Vacant: char(1)
+      Interior: char(1)
+      Bbl: char(10)
