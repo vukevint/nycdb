@@ -25,4 +25,7 @@ modules/hpd-complaints/*.csv
 src/.pytest_cache/
 
 *.bz2
+<<<<<<< HEAD
 **/.DS_Store
+=======
+>>>>>>> e65c87f872c719edf3a17edddeeae417e1625dc8

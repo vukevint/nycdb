@@ -85,10 +85,13 @@ def row_count(conn, table_name):
         return curs.fetchone()[0]
 
 
-def has_one_row(conn, query):
-    with conn.cursor() as curs:
+def fetch_one_row(conn, query):
+    with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as curs:
         curs.execute(query)
-        return bool(curs.fetchone())
+        return curs.fetchone()
+
+def has_one_row(*args):
+    return bool(fetch_one_row(*args))
 
 
 def table_columns(conn, table_name):
@@ -223,6 +226,20 @@ def test_pluto21v3(conn):
     pluto.db_import()
     assert row_count(conn, 'pluto_21v3') == 5
 
+<<<<<<< HEAD
+=======
+def test_pluto22v1(conn):
+    drop_table(conn, 'pluto_22v1')
+    pluto = nycdb.Dataset('pluto_22v1', args=ARGS)
+    pluto.db_import()
+    assert row_count(conn, 'pluto_22v1') == 5
+
+def test_pluto_latest(conn):
+    drop_table(conn, 'pluto_latest')
+    pluto = nycdb.Dataset('pluto_latest', args=ARGS)
+    pluto.db_import()
+    assert row_count(conn, 'pluto_latest') == 5
+>>>>>>> e65c87f872c719edf3a17edddeeae417e1625dc8
 
 def test_hpd_violations(conn):
     drop_table(conn, 'hpd_violations')
@@ -501,6 +518,13 @@ def test_dof_annual_sales(conn):
     dof_annual_sales.db_import()
     assert row_count(conn, 'dof_annual_sales') == 47
 
+def test_dof_421a(conn):
+    drop_table(conn, 'dof_421a')
+    dof_421a = nycdb.Dataset('dof_421a', args=ARGS)
+    dof_421a.files = [ nycdb.file.File({ 'dest': '421a_2021_brooklyn.xlsx', 'url': 'https://example.com' }, root_dir=data_dir) ]
+    dof_421a.db_import()
+    assert row_count(conn, 'dof_421a') == 45
+    assert fetch_one_row(conn, "SELECT * FROM dof_421a LIMIT 1")['fiscalyear'] == '2021'
 
 def run_cli(args, input):
     full_args = [
