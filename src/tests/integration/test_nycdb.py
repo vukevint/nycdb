@@ -240,6 +240,12 @@ def test_pluto_latest(conn):
     pluto.db_import()
     assert row_count(conn, 'pluto_latest') == 5
 
+def test_pluto_sql_columns(conn):
+    with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as curs:
+        curs.execute("select * from pluto_latest WHERE landuse = 1")
+        rec = curs.fetchone()
+        assert rec['landusedesc'] == "One & Two Family Buildings"
+
 
 def test_hpd_violations(conn):
     drop_table(conn, 'hpd_violations')
@@ -525,6 +531,20 @@ def test_dof_421a(conn):
     dof_421a.db_import()
     assert row_count(conn, 'dof_421a') == 45
     assert fetch_one_row(conn, "SELECT * FROM dof_421a LIMIT 1")['fiscalyear'] == '2021'
+
+def test_hpd_affordable_production(conn):
+    drop_table(conn, 'hpd_affordable_building')
+    drop_table(conn, 'hpd_affordable_project')
+    hpd_affordable_production = nycdb.Dataset('hpd_affordable_production', args=ARGS)
+    hpd_affordable_production.db_import()
+    assert row_count(conn, 'hpd_affordable_building') == 5
+    assert row_count(conn, 'hpd_affordable_project') == 5
+
+def test_hpd_conh(conn):
+    drop_table(conn, 'hpd_conh')
+    hpd_conh = nycdb.Dataset('hpd_conh', args=ARGS)
+    hpd_conh.db_import()
+    assert row_count(conn, 'hpd_conh') == 5
 
 def run_cli(args, input):
     full_args = [
