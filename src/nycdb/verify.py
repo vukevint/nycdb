@@ -12,7 +12,10 @@ TABLES = {
     'pluto_21v3': {'pluto_21v3': 800_000},
     'pluto_22v1': {'pluto_22v1': 800_000},
     'pluto_latest': {'pluto_latest': 800_000},
-    'dobjobs': {'dobjobs': 1_000_000},
+    'dobjobs': {
+        'dobjobs': 1_000_000,
+        'dob_now_jobs': 380_000
+    },
     'dob_violations': {'dob_violations': 2_000_000},
     'ecb_violations': {'ecb_violations': 1_300_000},
     'hpd_violations': {'hpd_violations': 4_000_000},
@@ -90,6 +93,8 @@ TABLES = {
         'hpd_affordable_project': 3_400
     },
     'hpd_conh': {'hpd_conh': 1_000},
+    'dcp_housingdb': {'dcp_housingdb': 70_000},
+    'speculation_watch_list': { 'speculation_watch_list': 500 }
 }
 
 
