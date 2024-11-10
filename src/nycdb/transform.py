@@ -89,7 +89,7 @@ def extract_csv_from_zip(file_path, csv_file_path):
                 yield line.decode('UTF-8', 'ignore')
 
 
-def to_csv(file_path_or_generator, header=None, dialect='excel'):
+def to_csv(file_path_or_generator, header_replacements={}):
     """
     Reads firstline as the headers and converts input into a stream of dicts.
     Keyword 'header' available to manually include header.
@@ -104,22 +104,17 @@ def to_csv(file_path_or_generator, header=None, dialect='excel'):
     else:
         raise ValueError("to_csv accepts Strings or Generators")
 
-    if not header:
-        # This is the original reader. Will continue to work with all other data sources.
-        with f:
-            headers = clean_headers(f.readline())
-            for row in csv.DictReader(f, fieldnames=headers, dialect=dialect):
-                yield row
-    else:
-        with f:
-            for row in csv.DictReader(f, fieldnames=header, dialect=dialect):
-                yield row
+    with f:
+        headers = clean_headers(f.readline())
+        headers = [header_replacements[h] if header_replacements.get(h) else h for h in headers]
+            #replace headers with table replacements and return new headers
+        for row in csv.DictReader(f, fieldnames=headers):
+            yield row
 
 
 def with_bbl(table, borough='borough', block='block', lot='lot'):
     for row in table:
         yield merge(row, {'bbl': bbl(row[borough], row[block], row[lot])})
-
 
 def skip_fields(table, fields_to_skip):
     for row in table:

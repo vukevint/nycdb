@@ -34,8 +34,8 @@ def parse_args():
     parser.add_argument('--load', metavar='DATASET', action='store', help='loads dataset into postgres')
     parser.add_argument('--verify', metavar='DATASET', action='store', help='verifies a dataset by checking the table row count')
     parser.add_argument('--dump', metavar='DATASET', action='store', help='creates a sql dump of the datasets in the current folder')
-    parser.add_argument('--reload', metavar='DATASET', action='store', help='overwrites dataset into postgres')
-    # list and verify all
+    parser.add_argument('--drop', metavar='DATASET', action='store', help='deletes a dataset from postgres')
+    # list and verify
     parser.add_argument('--list-datasets', action='store_true', help='lists all datasets')
     parser.add_argument('--verify-all', action='store_true', help='verifies all datasets')
     # DB CONNECTION
@@ -124,7 +124,8 @@ def dispatch(args):
         Dataset(args.dump, args=args).dump()
     elif args.dbshell:
         run_dbshell(args=args)
-
+    elif args.drop:
+        Dataset(args.drop, args=args).drop()
 
 def main():
     logging.basicConfig(level=logging.DEBUG)

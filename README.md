@@ -11,17 +11,23 @@ Residents, lawyers, tenants, and organizers who want to use data in their strugg
 - [DOB Complaints](https://github.com/nycdb/nycdb/wiki/Dataset:-DOB-Complaints)
 - [DOB Vacate Orders](https://github.com/nycdb/nycdb/wiki/Dataset:-DOB-Vacate-Orders) - From [FOIA request by Jennah Gosciak](https://github.com/jennahgosciak/dob_vacate_orders)
 - [DOB Violations](https://github.com/nycdb/nycdb/wiki/Dataset:-DOB-Violations)
+- [DOB Certificate of Occupancy](https://github.com/nycdb/nycdb/wiki/Dataset:-DOB-Certificate-of-Occupancy)
 - [HPD Violations](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Violations)
 - [HPD Litigations](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Litigations)
 - [HPD Registrations](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Registrations)
 - [HPD Complaints](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Complaints)
+- [HPD Charges](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Charges)
 - [HPD Repair and Vacate Orders](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Vacate-Orders)
 - [HPD Affordable Production (Building and Project)](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Affordable-Production)
+- [HPD Local Law 44 - housing projects with City financial assistance)](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Local-Law-44)
 - [HPD Certificate of No Harassment](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Certificate-of-No-Harassment)
+- [HPD Alternative Enforcement Program (AEP)](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Alternative-Enforcement-Program-(AEP))
+- [HPD Underlying Conditions Program](https://github.com/nycdb/nycdb/wiki/Dataset:-HPD-Underlying-Conditions-Program)
 - [Department of Finance Rolling Sales](https://github.com/nycdb/nycdb/wiki/Dataset:-DOF-Rolling-Sales)
 - [Department of Finance Annualized Sales](https://github.com/nycdb/nycdb/wiki/Dataset:-DOF-Annualized-Sales)
 - [Department of Finance Property Tax Exemptions](https://github.com/nycdb/nycdb/wiki/Dataset:-DOF-Exemptions)
 - [Tax bills - Rent Stabilization Unit Counts](https://github.com/nycdb/nycdb/wiki/Dataset:-Rent-Stabilized-Buildings) ([John Krauss](https://github.com/talos/nyc-stabilization-unit-counts) and [Atul Varma's](https://github.com/JustFixNYC/nyc-doffer) data)
+- [DOF Tax Lien Sale List](https://github.com/nycdb/nycdb/wiki/Dataset:-DOF-Tax-Lien-Sale-List)
 - [ACRIS](https://github.com/nycdb/nycdb/wiki/Dataset:-ACRIS)
 - [Marshal Evictions](https://github.com/nycdb/nycdb/wiki/Dataset:-Marshal-Evictions) - From [DOI](https://data.cityofnewyork.us/City-Government/Evictions/6z8x-wfk4) via ANHD's [Displacement Alert Project](https://github.com/ANHD-NYC-CODE/anhd-council-backend) and [API](https://api.displacementalert.org/docs/) (built by [Jade Ahking](https://github.com/0xStarcat))
 - [ECB Violations](https://github.com/nycdb/nycdb/wiki/Dataset:-ECB-Violations)
@@ -32,6 +38,12 @@ Residents, lawyers, tenants, and organizers who want to use data in their strugg
 - [BBLs of NYC Housing Authority (NYCHA) Developments](https://github.com/nycdb/nycdb/wiki/Dataset:-NYCHA-BBLs) — From NYCHA via [JustFix's scraper tool](https://github.com/JustFixNYC/nycha-scraper)
 - [Speculation Watch List](https://github.com/nycdb/nycdb/wiki/Dataset:-Speculation-Watch-List)
 - [DCP Housing Database](https://github.com/nycdb/nycdb/wiki/Dataset:-DCP-Housing-Database)
+- [Major Capital Improvements (MCI) Applications](https://github.com/nycdb/nycdb/wiki/Dataset:-Major-Capital-Improvements-(MCI)-Applications) - From [FOIL request by Winnie Shen](https://github.com/wshenyc/nyc_mci_map)
+- [DOB Safety Violations](https://data.cityofnewyork.us/Housing-Development/DOB-Safety-Violations/855j-jady)
+- [DHS Daily Shelter Census](https://www.nyc.gov/assets/dhs/downloads/pdf/dailyreport.pdf) - From [scraping by Adrian Nesta and Patrick Spauster](https://github.com/anesta95/nyc_shelter_count/tree/main)
+- [DOHMH Rodent Inspections](https://github.com/nycdb/nycdb/wiki/Dataset:-DOHMH-Rodent-Inspections)
+- [NYU Furman Center's Subsidized Housing Database](https://github.com/nycdb/nycdb/wiki/Dataset:-Subsidized-Housing-Database)
+
 
 ## Using the database
 
@@ -46,7 +58,7 @@ The Housing Data Coalition hosts their own copy ("instance") of nycdb. If you ar
 ### Acknowledgments
 
 - [Heatseek](https://heatseek.org/) for ongoing support of the project and for their amazing work.
-- [@talos](https://github.com/talos) for his [tax bill scrapping](https://github.com/talos/nyc-stabilization-unit-counts) to get counts of rent-stabilization units
+- [@talos](https://github.com/talos) for his [tax bill scraping](https://github.com/talos/nyc-stabilization-unit-counts) to get counts of rent-stabilization units
 - NYCDB's [programmers](https://github.com/nycdb/nycdb/graphs/contributors)
 - [Housing Data Coalition](https://www.housingdatanyc.org/) for their support and for hosting nycdb workshops
 
