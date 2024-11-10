@@ -11,6 +11,8 @@ TABLES = {
     'pluto_20v8': {'pluto_20v8': 800_000},
     'pluto_21v3': {'pluto_21v3': 800_000},
     'pluto_22v1': {'pluto_22v1': 800_000},
+    'pluto_23v1': {'pluto_23v1': 800_000},
+    'pluto_24v2': {'pluto_24v2': 800_000},
     'pluto_latest': {'pluto_latest': 800_000},
     'dobjobs': {
         'dobjobs': 1_000_000,
@@ -27,6 +29,12 @@ TABLES = {
         'hpd_registrations_grouped_by_bbl': 130_000,
         'hpd_registrations_grouped_by_bbl_with_contacts': 130_000
     },
+    'hpd_charges': {
+        'hpd_hwo_charges': 88_000, 
+        'hpd_omo_charges': 400_000, 
+        'hpd_omo_invoices': 700_000, 
+        'hpd_fee_charges': 90_000
+    },
     'dof_421a': {'dof_421a': 275_000},
     'dof_sales': {'dof_sales': 60_000},
     'dof_annual_sales': {'dof_annual_sales': 1_700_000},
@@ -38,14 +46,8 @@ TABLES = {
     'rentstab_v2': {'rentstab_v2': 40_000},
     'rentstab_summary': {'rentstab_summary': 45_000},
     'dob_complaints': {'dob_complaints': 1_000_000},
-    'hpd_complaints': {
-        'hpd_complaints': 1_000_000,
-        'hpd_complaint_problems': 2_000_000
-    },
-    'pad': {
-        'pad_adr': 1000000,
-        'pad_bbl': 1000000
-    },
+    'hpd_complaints': {'hpd_complaints_and_problems': 13_000_000},
+    'pad': {'pad_adr': 1000000},
     'acris': {
         'real_property_remarks': 1_000_000,
         'real_property_legals': 1_000_000,
@@ -70,11 +72,13 @@ TABLES = {
     },
     'nycha_bbls': {
         'nycha_bbls_18': 5_500,
+        'nycha_bbls_24': 5_500,
     },
     'oath_hearings': {'oath_hearings': 10_000_000},
     'hpd_vacateorders': {'hpd_vacateorders': 4_000},
     'hpd_litigations': {'hpd_litigations': 170_000},
     'j51_exemptions': {'j51_exemptions': 4_000_000},
+    'mci_applications':{'mci_applications': 25_000},
     'oca': {
         'oca_index': 1_300_000,
         'oca_causes': 1_300_000,
@@ -86,7 +90,8 @@ TABLES = {
         'oca_motions': 700_000,
         'oca_decisions': 650_000,
         'oca_judgments': 600_000,
-        'oca_warrants': 600_000
+        'oca_warrants': 600_000,
+        'oca_metadata': 1_300_000,
     },
     'hpd_affordable_production': {
         'hpd_affordable_building': 6_000,
@@ -94,7 +99,13 @@ TABLES = {
     },
     'hpd_conh': {'hpd_conh': 1_000},
     'dcp_housingdb': {'dcp_housingdb': 70_000},
-    'speculation_watch_list': { 'speculation_watch_list': 500 }
+    'speculation_watch_list': { 'speculation_watch_list': 500 },
+    'dob_certificate_occupancy': {'dob_certificate_occupancy': 138_000},
+    'dob_safety_violations': {'dob_safety_violations': 491_174},
+    'boundaries': {'nyad': 65, 'nycg': 13, 'nyss': 28, 'nymc': 28, 'nycc': 51, 'nyed': 4286, 'nybb': 5, 'nycd': 71, 'nysd': 33, 'nypp': 77, 'nyha': 354, 'nyhc': 30, 'nyfc': 348, 'nyfb': 49, 'nyfd': 9},
+    'dhs_daily_shelter_count': {'dhs_daily_shelter_count': 7_000},
+    'hpd_aep': {'hpd_aep': 3_000},
+    'hpd_underlying_conditions': {'hpd_underlying_conditions': 500},
 }
 
 

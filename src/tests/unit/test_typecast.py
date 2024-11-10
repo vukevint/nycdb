@@ -69,6 +69,8 @@ def test_date_invalid_yyyymmdd_string():
 def test_date_mm_dd_yyyy():
     assert typecast.date('05/01/1925') == datetime.date(1925, 5, 1)
     assert typecast.date('5/1/1925') == datetime.date(1925, 5, 1)
+    assert typecast.date('5/1/22') == datetime.date(2022, 5, 1)
+    assert typecast.date('5/1/95') == datetime.date(1995, 5, 1)
 
 
 def test_date_iso8601_string():
@@ -85,7 +87,6 @@ def test_date_accepts_datetime():
 
 
 def test_date_bad_str():
-    assert typecast.date('01/01/01') is None
     assert typecast.date('03/04/2015 12:00:00 AM XYZ') is None
     assert typecast.date('01/01/0000') is None
     assert typecast.date('WHATHAPP') is None
@@ -99,10 +100,12 @@ def test_date_mm_dd_yyyy_with_timestamp():
 
 
 def test_time():
-    assert typecast.time('15:01:00') == datetime.time(hour=15, minute=1, second=0)
-    assert typecast.time('15:1:0') == datetime.time(hour=15, minute=1, second=0)
-    assert typecast.time('3:01:00 PM') == datetime.time(hour=15, minute=1, second=0)
-    assert typecast.time('3:01:00 AM') == datetime.time(hour=3, minute=1, second=0)
+    assert typecast.time('15:01:00') == datetime.time(15, 1, 0)
+    assert typecast.time('15:1:0') == datetime.time(15, 1, 0)
+    assert typecast.time('3:01:00 PM') == datetime.time(15, 1, 0)
+    assert typecast.time('3:01:00 AM') == datetime.time(3, 1, 0)
+    assert typecast.time('12:45:41 PM') == datetime.time(12, 45, 41)
+    assert typecast.time('12:45:41 AM') == datetime.time(0, 45, 41)
     assert typecast.time(datetime.time.min) == datetime.time.min
     assert typecast.time('RIGHT NOW') is None
     assert typecast.time(None) is None
@@ -113,6 +116,8 @@ def test_timestamp():
     assert typecast.timestamp('05/13/2020 23:30:00') == datetime.datetime(2020, 5, 13, 23, 30, 0)
     assert typecast.timestamp('2020-05-13 11:30:00 PM') == datetime.datetime(2020, 5, 13, 23, 30, 0)
     assert typecast.timestamp('2020-05-13 11:30:00 AM') == datetime.datetime(2020, 5, 13, 11, 30, 0)
+    assert typecast.timestamp('03/26/2021 12:45:41 PM') == datetime.datetime(2021, 3, 26, 12, 45, 41)
+    assert typecast.timestamp('03/26/2021 12:45:41 AM') == datetime.datetime(2021, 3, 26, 0, 45, 41)
     assert typecast.timestamp(datetime.datetime(2020, 5, 13, 11, 30, 0)) == datetime.datetime(2020, 5, 13, 11, 30, 0)
 
 
@@ -139,16 +144,16 @@ def test_typecast_init():
 
 
 def test_typecast_generate_cast():
-    t = typecast.Typecast(nycdb.datasets()['hpd_complaints']['schema'][0])
-    assert t.cast['boroughid']('123') == 123
+    t = typecast.Typecast(nycdb.datasets()['hpd_violations']['schema'])
+    assert t.cast['buildingid']('123') == 123
     assert t.cast['borough'](' test  ') == 'test'
     assert t.cast['bbl']('0123456789X') == '0123456789'
 
 
 def test_cast_row():
-    t = typecast.Typecast(nycdb.datasets()['hpd_complaints']['schema'][0])
-    row = { 'BoroughID': '123', 'Status': 'GOOD' }
-    assert t.cast_row(row) == { 'BoroughID': 123, 'Status': 'GOOD' }
+    t = typecast.Typecast(nycdb.datasets()['hpd_registrations']['schema'][0])
+    row = { 'boroid': '123', 'streetname': 'GOOD' }
+    assert t.cast_row(row) == { 'boroid': 123, 'streetname': 'GOOD' }
 
 
 def test_correct_bbl_typecast_for_pluto():
